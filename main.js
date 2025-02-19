@@ -47,7 +47,6 @@ function create() {
     });
 }
 
-
 function update() {
     console.log("Update läuft");
 }
