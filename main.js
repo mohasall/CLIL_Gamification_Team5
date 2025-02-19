@@ -35,6 +35,7 @@ function create() {
     // Erstelle den Spieler in der Mitte der Karte
     this.player = this.physics.add.sprite(startX, startY, "player");
     this.player.setCollideWorldBounds(true);
+    this.cameras.main.setSize(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
     // Ziel-Koordinaten (werden aktualisiert, wenn Spieler tippt)
