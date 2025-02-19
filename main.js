@@ -23,30 +23,33 @@ function preload() {
 }
 
 function create() {
-    // Lade die PNG-Karte als Hintergrund
+    // Lade die Karte
     this.map = this.add.image(0, 0, "M1L1").setOrigin(0, 0);
-
-    // Setze die Weltgröße auf die Kartengröße
     this.physics.world.setBounds(0, 0, this.map.width, this.map.height);
-
-    // Setze die Kamera-Grenzen auf die Kartengröße
     this.cameras.main.setBounds(0, 0, this.map.width, this.map.height);
 
-    // Erstelle den Spieler
-    this.player = this.physics.add.sprite(100, 100, "player");
-    this.player.setCollideWorldBounds(true);  // Spieler kann nicht über die Bildgrenzen hinaus
+    // Berechne die Mitte der Karte
+    let startX = this.map.width / 2;
+    let startY = this.map.height / 2;
 
-    // Kamera folgt dem Spieler
+    // Erstelle den Spieler in der Mitte der Karte
+    this.player = this.physics.add.sprite(startX, startY, "player");
+    this.player.setCollideWorldBounds(true);
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
 
-    // **Touch-Steuerung: Spieler bewegt sich zur Klick-Position**
+    // Ziel-Koordinaten (werden aktualisiert, wenn Spieler tippt)
+    this.target = new Phaser.Math.Vector2(this.player.x, this.player.y);
+
+    // Touch-Steuerung
     this.input.on("pointerdown", (pointer) => {
-        let x = pointer.worldX;
-        let y = pointer.worldY;
-        this.physics.moveTo(this.player, x, y, 200);
+        this.target.set(pointer.worldX, pointer.worldY);  
+        this.physics.moveTo(this.player, this.target.x, this.target.y, 200);
     });
 }
 
 function update() {
-    console.log("Update läuft");
+    // Stoppe den Spieler, wenn er nah genug am Ziel ist
+    if (Phaser.Math.Distance.Between(this.player.x, this.player.y, this.target.x, this.target.y) < 5) {
+        this.player.body.setVelocity(0);
+    }
 }
