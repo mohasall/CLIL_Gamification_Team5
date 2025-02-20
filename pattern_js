@@ -1,3 +1,5 @@
+
+
 // Display the pop-up when the page loads
 window.onload = function() {
     document.getElementById('popup').style.display = 'flex';
@@ -22,18 +24,82 @@ document.getElementById('popup').onclick = function(e) {
 const locationData = {
     auditorium: {
         title: "Auditorium",
-        info: "Here is the Auditorium, you can find interesting events happening here!",
-        question: "How many seats are in the Auditorium?",
-        options: ["100", "150", "200", "250"],
-        correctIndex: 2 // corresponds to "200"
+        info: "The auditorium is the largest lecture hall in the building. Some of the lectures are held here, so be sure to check your schedule for classes in this space.",
+        question: "How many chairs are at the Auditorium?",
+        options: ["160", "170", "180", "190"],
+        correctIndex: 1 // corresponds to "200"
     },
     cafeteria: {
         title: "Cafeteria",
-        info: "This is the Cafeteria where you can get coffee, lunch, and snacks.",
-        question: "Which traditional Finnish food can you find here?",
-        options: ["Pizza", "Karelian Pie", "Hamburger", "Sushi"],
-        correctIndex: 1 // corresponds to "Karelian Pie"
+        info: "The cafeteria at Karelia is the perfect spot for an affordable student breakfast, lunch, snack, or coffee. The buffet changes daily to offer variety and provides you with the energy you need to power through your day.",
+        question: "How much does the cheapest menu cost for students?",
+        options: ["1.05", "1.95", "2.05", "2.95"],
+        correctIndex: 4 // corresponds to "Karelian Pie"
+    },
+    pokaOffice: {
+        title: "Poka office",
+        info: "As a member of the student union POKA, you become part of the vibrant Karelia student community. Even if you're not a member, you can still sign up for some of the coolest campus activities for a small fee. Don't miss out on the fun!",
+        question: "What is the animal on the Poka badge?",
+        options: ["Wolf", "Duck", "Lion", "Reindeer"],
+        correctIndex: 2 // corresponds to "200"
+    },
+    chaple: {
+        title: "Chaple",
+        info: "The campus Chaplains are here to assist you with any concerns or complaints, or if you simply need someone to talk to. They provide support and a listening ear, offering guidance and comfort whenever you need it.",
+        question: "Who can go to the chaple?",
+        options: ["The students", "The teachers", "Nobody", "Everyone at Karelia"],
+        correctIndex: 4 // corresponds to "200"
+    },
+    wellbeingOffice: {
+        title: "Wellbeing office",
+        info: "If you're struggling with your studies or organization, or if you're facing challenges, they are here to help you find a solution. You can always rely on support and guidance to move forward.",
+        question: "How many years has Finland been the happiest country in the world?",
+        options: ["2 years", "5 years", "7 years", "10 years"],
+        correctIndex: 3 // corresponds to "200"
+    },
+    quietroom: {
+        title: "Quiet room",
+        info: "The quiet room is a space designed to help you clear your mind, reduce stress, and escape the loud noises in the school. It’s a perfect place to relax and focus when you need a break.",
+        question: "What can you do in a quiet room?",
+        options: ["Study", "Praying", "Talk", "Chilling"],
+        correctIndex: 4 // corresponds to "200"
+    },
+    cubicles: {
+        title: "Cubicles",
+        info: "At Karelia, there are several cubicles available for quiet study, group meetings, or important phone calls. You can reserve a cubicle through the booking system on the door.",
+        question: "What is the maximum time that you can reserve a cubicle?",
+        options: ["1 hrs.", "2 hrs.", "3 hrs.", "5 hrs."],
+        correctIndex: 3 // corresponds to "200"
+    },
+    parkingLot: {
+        title: "Parking lot",
+        info: "You can park your car in the designated area on campus.",
+        question: "Who do you contact if you want a parking permit?",
+        options: ["The poka union", "The director", "Infodesk", "Your teacher"],
+        correctIndex: 3 // corresponds to "200"
+    },
+    smokingArea: {
+        title: "Smoking area",
+        info: "Smoking is only permitted in the designated area on campus. Smoking is prohibited everywhere else. Please make sure to follow these rules for the comfort and safety of everyone.",
+        question: "What is a true interesting fact about smoking in Finland?",
+        options: ["Smoking is forbidden at public spaces", "Finland has the strictest smoking laws in Europe", "Most Finns smoke in the sauna", "Cigarettes in Finland are the most expensive in all of Europe"],
+        correctIndex: 2 // corresponds to "200"
+    },
+    entrance: {
+        title: "Entrance",
+        info: "Upon entering, you'll find yourself in the main hall, where you can enjoy various games and gather with other students in a relaxed atmosphere.",
+        question: "Approximately, how many students are studying at Karelia at the moment?",
+        options: ["2500", "4300", "7400", "1100"],
+        correctIndex: 2 // corresponds to "200"
+    },
+    classroom: {
+        title: "Entrance",
+        info: "You can learn Finnish in one of our other game. So you can learn while having fun!",
+        question: "What is the translation of “train station” in Finnish?",
+        options: ["rautatieasema", "koulu", "syö", "Pudota"],
+        correctIndex: 1 // corresponds to "200"
     }
+    
     // Add more entries for each location
 };
 
