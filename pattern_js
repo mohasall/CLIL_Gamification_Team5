@@ -1,0 +1,149 @@
+// Display the pop-up when the page loads
+window.onload = function() {
+    document.getElementById('popup').style.display = 'flex';
+};
+
+// Close the pop-up when the "Start Game" button is clicked
+document.getElementById('close-popup').onclick = function() {
+    document.getElementById('popup').style.display = 'none';
+};
+
+// Close the pop-up if clicked outside the content
+document.getElementById('popup').onclick = function(e) {
+    if (e.target === this) {
+        document.getElementById('popup').style.display = 'none';
+    }
+};
+
+/* ----------------------------------------------------------------
+   Data: Info and quiz for each location (Auditorium, Cafeteria...)
+   Add as many entries as needed to cover your campus plan
+------------------------------------------------------------------ */
+const locationData = {
+    auditorium: {
+        title: "Auditorium",
+        info: "Here is the Auditorium, you can find interesting events happening here!",
+        question: "How many seats are in the Auditorium?",
+        options: ["100", "150", "200", "250"],
+        correctIndex: 2 // corresponds to "200"
+    },
+    cafeteria: {
+        title: "Cafeteria",
+        info: "This is the Cafeteria where you can get coffee, lunch, and snacks.",
+        question: "Which traditional Finnish food can you find here?",
+        options: ["Pizza", "Karelian Pie", "Hamburger", "Sushi"],
+        correctIndex: 1 // corresponds to "Karelian Pie"
+    }
+    // Add more entries for each location
+};
+
+// Current player score
+let score = 0;
+
+// To avoid replaying the same question, store visited locations
+let visitedLocations = {};
+
+// Get DOM elements
+const modal = document.getElementById("locationModal");
+const closeModalBtn = modal.querySelector(".close");
+const scoreValueEl = document.getElementById("score-value");
+const badgeLevelEl = document.getElementById("badge-level");
+
+// Close the modal when clicking on the cross
+closeModalBtn.onclick = function() {
+    modal.style.display = "none";
+};
+
+// Close the modal if clicked outside
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
+
+// Event listeners on all clickable areas of the map
+document.querySelectorAll("area[data-location]").forEach(area => {
+    area.addEventListener("click", function(e) {
+        e.preventDefault();
+        const locationKey = this.dataset.location;
+        openLocationModal(locationKey);
+    });
+});
+
+/* Open the modal for a given location */
+function openLocationModal(locationKey) {
+    const data = locationData[locationKey];
+    if (!data) return; // If no data, do nothing
+
+    // Fill the modal with content
+    document.getElementById("locationTitle").textContent = data.title;
+    document.getElementById("locationInfo").textContent = data.info;
+    document.getElementById("quizQuestion").textContent = data.question;
+
+    // Generate answer options
+    const quizOptionsDiv = document.getElementById("quizOptions");
+    quizOptionsDiv.innerHTML = ""; // reset
+    data.options.forEach((option, index) => {
+        const label = document.createElement("label");
+        label.innerHTML = `
+            <input type="radio" name="quizOption" value="${index}">
+            ${option}
+        `;
+        quizOptionsDiv.appendChild(label);
+        quizOptionsDiv.appendChild(document.createElement("br"));
+    });
+
+    // Display the modal
+    modal.style.display = "block";
+
+    // When "Submit" is clicked, check the answer
+    document.getElementById("submitAnswer").onclick = () => {
+        checkAnswer(locationKey);
+    };
+}
+
+/* Check the selected answer */
+function checkAnswer(locationKey) {
+    // If already answered for this location, prevent replaying
+    if (visitedLocations[locationKey]) {
+        alert("You've already answered this location!");
+        return;
+    }
+
+    const data = locationData[locationKey];
+    const selected = document.querySelector('input[name="quizOption"]:checked');
+
+    if (!selected) {
+        alert("Please select an answer!");
+        return;
+    }
+
+    const selectedIndex = parseInt(selected.value);
+    if (selectedIndex === data.correctIndex) {
+        // Correct answer: gain 10 points
+        score += 10;
+        scoreValueEl.textContent = score;
+        updateBadge();
+        alert("Correct! You earned 10 Salmiakki!");
+    } else {
+        alert("Wrong answer. Try again next time!");
+    }
+
+    // Mark the location as "visited"
+    visitedLocations[locationKey] = true;
+    // Close the modal
+    modal.style.display = "none";
+}
+
+/* Update the badge based on the score */
+function updateBadge() {
+    let badgeLevel = "";
+    if (score >= 110) {
+        badgeLevel = "Gold Badge";
+    } else if (score >= 100) {
+        badgeLevel = "Silver Badge";
+    } else if (score >= 50) {
+        badgeLevel = "Bronze Badge";
+    }
+    badgeLevelEl.textContent = badgeLevel ? ` - ${badgeLevel}` : "";
+}
