@@ -1,0 +1,38 @@
+class Place:
+    """
+    A universal class to store and retrieve information about places.
+    """
+    
+    def __init__(self, title: str, description: str):
+        """
+        Initializes a Place object with a title and description.
+        
+        :param title: The name of the place.
+        :param description: A short description of the place.
+        """
+        self.title = title
+        self.description = description
+
+    def get_info(self) -> str:
+        """
+        Returns a formatted string with the place's title and description.
+        
+        :return: A string containing the title and description of the place.
+        """
+        return f"Title: {self.title}\nDescription: {self.description}"
+
+
+# Placeholder for XP points
+xp_points = 0  # This can be updated dynamically as needed
+
+# Example usage
+castle = Place("Ancient Castle", "A mysterious ruin filled with secrets and danger.")
+forest = Place("Dark Forest", "A dense forest where shadows move on their own.")
+
+# Printing place info
+print(castle.get_info())
+print(forest.get_info())
+
+# Updating XP dynamically
+xp_points += 50  # Gained 50 XP
+print(f"Current XP: {xp_points}")
