@@ -1,38 +1,81 @@
-class Place:
-    """
-    A universal class to store and retrieve information about places.
-    """
-    
-    def __init__(self, title: str, description: str):
-        """
-        Initializes a Place object with a title and description.
-        
-        :param title: The name of the place.
-        :param description: A short description of the place.
-        """
-        self.title = title
-        self.description = description
+class XP {
+    constructor() {
+        this.points = 0;  // Initialize XP points to 0
+    }
 
-    def get_info(self) -> str:
-        """
-        Returns a formatted string with the place's title and description.
-        
-        :return: A string containing the title and description of the place.
-        """
-        return f"Title: {self.title}\nDescription: {self.description}"
+    addPoints(amount) {
+        this.points += amount;  // Add XP points dynamically
+    }
 
+    getPoints() {
+        return this.points;  // Return the current XP points
+    }
+}
 
-# Placeholder for XP points
-xp_points = 0  # This can be updated dynamically as needed
+class Place {
+    constructor(title, description) {
+        this.title = title;  // Title of the place
+        this.description = description;  // Description of the place
+    }
 
-# Example usage
-castle = Place("Ancient Castle", "A mysterious ruin filled with secrets and danger.")
-forest = Place("Dark Forest", "A dense forest where shadows move on their own.")
+    getInfo() {
+        // Returns a formatted string with the title and description of the place
+        return `Title: ${this.title}\nDescription: ${this.description}`;
+    }
+}
 
-# Printing place info
-print(castle.get_info())
-print(forest.get_info())
+class MainScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'MainScene' });
+        this.xp = new XP();  // Create an instance of the XP class
+    }
 
-# Updating XP dynamically
-xp_points += 50  # Gained 50 XP
-print(f"Current XP: {xp_points}")
+    preload() {
+        // Load game resources here (images, sounds, etc.)
+    }
+
+    create() {
+        // Define two example places
+        let castle = new Place("Ancient Castle", "A mysterious ruin filled with secrets and danger.");
+        let forest = new Place("Dark Forest", "A dense forest where shadows move on their own.");
+
+        // Display the information of the places in the console
+        console.log(castle.getInfo());
+        console.log(forest.getInfo());
+
+        // Add XP points dynamically
+        this.xp.addPoints(50);  // Gain 50 XP points
+        console.log(`Current XP: ${this.xp.getPoints()}`);
+
+        // Display XP on the screen in Phaser
+        this.add.text(100, 100, `XP: ${this.xp.getPoints()}`, { font: '32px Arial', fill: '#fff' });
+
+        // Add interaction to gain more XP points
+        this.add.text(100, 200, 'Click to gain 100 XP', { font: '32px Arial', fill: '#fff' })
+            .setInteractive()
+            .on('pointerdown', () => {
+                this.xp.addPoints(100);  // Add 100 XP points when clicked
+                console.log(`New XP: ${this.xp.getPoints()}`);
+                this.updateXPText();  // Update the displayed XP
+            });
+    }
+
+    updateXPText() {
+        // Update the displayed XP text on the screen
+        this.children.getByName('xpText').setText(`XP: ${this.xp.getPoints()}`);
+    }
+
+    update() {
+        // Update game logic (movement, collisions, etc.)
+    }
+}
+
+// Phaser game configuration
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    scene: MainScene
+};
+
+const game = new Phaser.Game(config);
